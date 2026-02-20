@@ -1,0 +1,10 @@
+{
+  "id": "massivenet_provider_node",
+  "name": "MassiveNet Provider Node",
+  "description": "Runs a MassiveNet provider-node polling worker inside OpenClaw.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "massivenet-openclaw-provider-node",
+  "version": "0.1.0",
+  "description": "Standalone OpenClaw plugin for MassiveNet provider-node workers",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "index.ts",
+    "src",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.2.19-2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "openclaw": "^2026.2.19-2",
+    "typescript": "^5.9.2",
+    "vitest": "^2.1.8"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dafrontman/massivenet-openclaw-provider-node.git"
+  },
+  "license": "MIT"
+}
