@@ -148,6 +148,49 @@ MASSIVENET_EXECUTOR=http
 MASSIVENET_LOCAL_EXECUTOR_URL=http://127.0.0.1:3001/execute
 ```
 
+## Live Integration Check
+
+This repo includes an opt-in dev integration script at [scripts/live-integration.ts](/c:/projects/massivenet-openclaw-provider-node/scripts/live-integration.ts).
+
+What it validates against a real MassiveNet dev/local control plane:
+
+- bootstrap registration or persisted credential reuse
+- `GET /v1/nodes/me`
+- `POST /v1/nodes/heartbeat`
+- `POST /v1/nodes/poll`
+- if a job is assigned: `GET /v1/nodes/jobs/{job_id}/input`
+- if a job is assigned: `POST /v1/nodes/jobs/{job_id}/complete`
+
+Requirements:
+
+- target a dev/local MassiveNet control plane
+- do not run against Smooth-5K load-test mode
+- use a provider API key and a valid invite token from that same MassiveNet instance
+
+Run:
+
+```bash
+npm install
+MASSIVENET_BASE_URL=http://127.0.0.1:8000 \
+MASSIVENET_PROVIDER_API_KEY=replace-with-provider-api-key \
+MASSIVENET_INVITE_TOKEN=replace-with-invite-token \
+MASSIVENET_NODE_NAME=provider-node-integration-01 \
+MASSIVENET_NODE_CAPABILITIES_JSON='{"gpu":false,"max_concurrency":1,"models_supported":["stub"],"backends_supported":["stub"]}' \
+npm run integration:dev
+```
+
+Optional:
+
+- `MASSIVENET_NODE_CREDENTIALS_PATH`
+  - default for the integration script: `.massivenet-node-credentials.integration.json`
+- `MASSIVENET_EXECUTOR`
+  - default for the integration script: `stub`
+
+Expected outcomes:
+
+- if no work is queued, the script still passes registration, identity, heartbeat, and poll validation and reports that input fetch and completion were not exercised
+- if a job is assigned, the script fetches input and completes the job using the existing stub completion path
+
 ## Operational Notes
 
 - Registration requires a valid provider API key from the same MassiveNet instance.
